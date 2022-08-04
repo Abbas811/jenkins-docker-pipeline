@@ -1,45 +1,34 @@
-#pod for myapp
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myapp
-  namespace: default
-  labels:
-    app:  myapp
+  name: my-app-deployment
 spec:
+  replicas: 3
   selector:
     matchLabels:
       app: myapp
-  replicas: 1
-  strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-    type: RollingUpdate
   template:
     metadata:
       labels:
         app: myapp
+    spec:
       containers:
       - name: myapp
         image: kameshindium/myapp:1.0
+        imagePullPolicy: Always
         ports:
-        - containerPort:  8080
-          name:  myapp
+        - containerPort: 8080
+# service type loadbalancer       
 ---
-
-#service for myapp
-
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
-  name: myapp
+  name: my-app-svc
 spec:
   selector:
-    app: myapp
+    app: myaapp
   ports:
-  - protocol: TCP
-    port: 8080
-    targetPort: 8080
-  type: LoadBalancer         
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: LoadBalancer
