@@ -1,17 +1,32 @@
 #pod for myapp
 
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: myapp
+  namespace: default
   labels:
-    app: myapp
+    app:  myapp
 spec:
-  containers:
-    - name: myapp
-      image: kameshindium/myapp:1.0
-      ports:
-        - containerPort: 8080
+  selector:
+    matchLabels:
+      app: myapp
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: myapp
+      containers:
+      - name: myapp
+        image: kameshindium/myapp:1.0
+        ports:
+        - containerPort:  8080
+          name:  myapp
 ---
 
 #service for myapp
