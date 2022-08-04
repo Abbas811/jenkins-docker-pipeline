@@ -1,0 +1,30 @@
+#pod for myapp
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp
+  labels:
+    app: myapp
+spec:
+  containers:
+    - name: myapp
+      image: kameshindium/myapp:1.0
+      ports:
+        - containerPort: 8080
+---
+
+#service for myapp
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: myapp
+spec:
+  selector:
+    app: myapp
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+  type: LoadBalancer         
