@@ -1,34 +1,34 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-app-deployment
+  name: my-python-deployment
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: myapp
+      app: python-app
   template:
     metadata:
       labels:
-        app: myapp
+        app: python-app
     spec:
       containers:
-      - name: myapp
-        image: kameshindium/myapp:1.0
+      - name: my-python-app
+        image: akdevopscoaching/mypython-app
         imagePullPolicy: Always
         ports:
-        - containerPort: 8080
+        - containerPort: 5000
 # service type loadbalancer       
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-app-svc
+  name: python-app-svc
 spec:
   selector:
-    app: myaapp
+    app: python-app
   ports:
     - protocol: TCP
-      port: 8080
-      targetPort: 8080
+      port: 5000
+      targetPort: 5000
   type: LoadBalancer
