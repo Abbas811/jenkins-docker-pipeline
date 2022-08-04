@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: myweb
+  name: myapp
   labels:
-    app: myweb
+    app: myapp
 spec:
   containers:
-    - name: myweb
-      image: kameshindium/myweb:0.0.2
+    - name: myapp
+      image: kameshindium/myapp:1.0
       ports:
         - containerPort: 8080
